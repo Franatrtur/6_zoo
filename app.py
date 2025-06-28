@@ -1,13 +1,64 @@
 # SPUSTENI: pravy klik na nazev slozky (6_zoo) - Open in Integrated Terminal - flask run --debug - potvrdit klavesou Enter
-
-from flask import Flask, render_template, redirect, request
+import pymysql
+from flask import Flask, g, render_template, redirect, request
 # Vytvoreni Flask aplikace
 from config import Config
-from db import fetch, fetchall, akce, init_db
 app = Flask(__name__)
 
 app.config.from_object(Config)
-init_db(app)
+
+def get_db():
+    """
+    Opens a new database connection if there isn't one yet for the
+    current application context. Stores it in flask.g so that
+    it can be reused in the same request.
+    """
+    if 'db' not in g:
+        g.db = pymysql.connect(
+            host=app.config['MYSQL_HOST'],
+            user=app.config['MYSQL_USER'],
+            password=app.config['MYSQL_PASSWORD'],
+            db=app.config['MYSQL_DB'],
+            cursorclass=pymysql.cursors.DictCursor
+        )
+    return g.db
+
+@app.teardown_appcontext
+def close_db(exception):
+    """
+    Closes the database again at the end of the request.
+    """
+    db = g.pop('db', None)
+    if db is not None:
+        db.close()
+
+# --- Query Helpers ---
+def fetchall(sql, params=None):
+    """
+    Execute a SELECT *‑style query and return all rows as a list of dicts.
+    """
+    conn = get_db()
+    with conn.cursor() as cur:
+        cur.execute(sql, params or ())
+        return cur.fetchall()
+
+def fetch(sql, params=None):
+    """
+    Execute a SELECT query and return a single row (or None).
+    """
+    conn = get_db()
+    with conn.cursor() as cur:
+        cur.execute(sql, params or ())
+        return cur.fetchone()
+
+def akce(sql, params=None):
+    """
+    Execute an INSERT/UPDATE/DELETE and commit.
+    """
+    conn = get_db()
+    with conn.cursor() as cur:
+        cur.execute(sql, params or ())
+    conn.commit()
 
 @app.get("/")
 def domovskaStranka():
