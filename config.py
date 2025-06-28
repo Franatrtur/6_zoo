@@ -1,6 +1,8 @@
+import os
 class Config:
-    MYSQL_HOST = 'sql7.freesqldatabase.com'
-    MYSQL_USER = 'sql7787284'
-    MYSQL_PASSWORD = 'wgvp5FXWd9'
-    MYSQL_DB = 'sql7787284'
+    MYSQL_HOST = os.environ['MYSQLHOST']
+    MYSQL_USER = os.environ['MYSQLUSER']
+    MYSQL_PASSWORD = os.environ['MYSQLPASSWORD']
+    MYSQL_DB = os.environ['MYSQLDATABASE']
+    MYSQL_PORT = int(os.environ.get('MYSQLPORT', 3306))
     MYSQL_CURSORCLASS = 'DictCursor'
