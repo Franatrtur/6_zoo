@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    {% block head %}
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico" />
+
+    <title>{% block title %}{% endblock %} - Zoo Orange</title>
+    {% endblock %}
+  </head>
+  <body>
+    <div class="modry">
+      <a href="/" class="nadpis">Seznam zvířecích poddruhů</a>
+    </div>
+    <div class="obsah">{% block obsah %}{% endblock %}</div>
+    <div class="paticka">
+      {% block paticka %} &copy; 2024 Orange Academy {% endblock %}
+    </div>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+{% extends "kostra.html" %} {% block title %}Domů{% endblock %} {% block obsah
+%}
+<h1>Registr zvířat</h1>
+<!-- Testovaci vypis -->
+{{zvirata}}
+<!--  -->
+{%for z in zvirata%}
+<div class="bila">
+  <a href="poddruh/{{z['Id']}}">
+    <span class="nadpis">{{z['Oznaceni']}} ({{z['Pocet']}})</span>
+  </a>
+  <br />
+  <i>{{z['Popis']}}</i>
+</div>
+{%endfor%} {% endblock %}

@@ -1,0 +1,3 @@
+Vytvořte registr zaměstnanců ZOO (napojte jej odkazem v horním namodralém pásu vedle již existujícímu odkazu "Seznam zvířecích poddruhů").
+Registr by měl obsahovat seznam zaměstnanců s vypsanými funkcemi a dalšími informacemi (např. o počtu zvířat, které mají na starosti...),
+možnost přidat nového/editovat/smazat zaměstnance.

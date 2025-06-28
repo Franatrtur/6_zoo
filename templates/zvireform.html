@@ -1,0 +1,35 @@
+{% extends "kostra.html" %} {% block title %}Úprava zvířete{% endblock %} {%
+block obsah %} 
+<h1>{{nadpis}}</h1> <br>
+
+<form action="/jedinec" method="POST">
+<input type="hidden" name="ZvireId" value="{{zvire['ZvireId']}}">
+Pohlaví <br>
+<input type="radio" name="Pohlavi" value="f" {%if zvire['ZvirePohlavi']=="f" or zvire == None %}checked{%endif%}>Samice<br>
+<input type="radio" name="Pohlavi" value="m" {%if zvire['ZvirePohlavi']=="m"%}checked{%endif%}>Samec<br>
+
+<label for="Poddruh">Zvířecí poddruh</label><br>
+<select name="Poddruh">
+  
+{% for p in poddruhy %}
+<option value="{{p['Id']}}" {%if p['Id'] == zvire['Id'] or p['Id']|string() == poddruhId%}selected{%endif%}>{{p['Oznaceni']}}</option>
+{% endfor %}
+</select> <br>
+
+
+<label for="Pecovatel">Pečovatel</label><br />
+<select name="Pecovatel">
+  {%for p in pecovatele%}
+  <option value="{{p['Id']}}" {%if p['Id']==zvire['IdP']%}selected{%endif%}>
+    {{p['Prijmeni']}} {{p['Jmeno']}} 
+  </option>
+  {%endfor%}</select><br />
+
+  <label for="Popis">Popis:</label><br />
+  <input type="text" name="Popis" size="80" value="{{zvire['ZvirePopis']}}" /><br />
+  <label for="Poznamka">Poznámka:</label><br />
+  <textarea name="Poznamka" cols="80" rows="8">{{zvire['ZvirePoznamka']}}</textarea><br />
+  <input type="submit" value="Odeslat" /><br />
+</form>
+
+{% endblock %}

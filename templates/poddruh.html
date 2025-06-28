@@ -1,0 +1,20 @@
+{% extends "kostra.html" %} {% block title %}Jedinci poddruhu{% endblock %} {%
+block obsah %}
+<!-- <h1>{{nadpis}}</h1> -->
+<p class="nadpis">
+    <a href="/jedinec/novy?poddruh={{poddruh['Id']}}">Přidat nového jedince poddruhu {{poddruh['Oznaceni']}}</a>
+</p>
+<h3>Zvířata poddruhu {{poddruh['Oznaceni']}}</h3>
+{%for j in jedinci%} 
+<div class="bila">
+  <span class="nadpis">{{j['ZvirePopis']}}</span> <br />
+
+  <!-- Hezci vypis pohlavi f->samice, m->samec -->
+  {%if j['ZvirePohlavi'] == "f" %} samice {%endif%} {%if j['ZvirePohlavi'] == "m" %} samec {%endif%}
+  <br />
+  Pečovatel: {{j['JmenoP']}} {{j['PrijmeniP']}} (ID: {{j['IdP']}})
+  <br />
+  {%if j['ZvirePoznamka'] != ""%}<i>{{j['ZvirePoznamka']}}</i></br>{%endif%}
+  <a href="/jedinec/{{j['ZvireId']}}">Upravit</a>
+</div>
+{%endfor%} {%endblock%}
