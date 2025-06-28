@@ -174,5 +174,5 @@ def upravitZvire(id):
 
     return render_template("zvireform.html", zvire=zvire, nadpis=nadpis, pecovatele=pecovatele, poddruhy=poddruhy)
 
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == "__main__": 
+    app.run(host="0.0.0.0", port=5000)
